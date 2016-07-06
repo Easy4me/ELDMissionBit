@@ -35,6 +35,7 @@ demo.state0.prototype = {
         bob.scale.setTo(1.5,1.5);
         
         bob.animations.add('walk',[0,1,2,3,4, 5]);
+        bob.animations.add('punch',[0,1,2,3,4]);
     },
     
     
@@ -57,10 +58,14 @@ demo.state0.prototype = {
         if(game.input.keyboard.isDown(Phaser.Keyboard.UP)){
             bob.animations.play('walk');
             bob.y = bob.y - speed;
+        } if(game.input.keyboard.isDown(Phaser.keyboard.A))
+            }
+            bob.animations.play('punch');
+        }    bob.y = bob.y -speed;
         
-        }
+        
 
-    }
+    
 };
         
         
