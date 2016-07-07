@@ -1,6 +1,7 @@
  var demo = {};
 var bob;
-var speed = 6;
+var speed = 1;
+var enemy;
 
 demo.state0 = function(){};
 
@@ -13,7 +14,7 @@ demo.state0.prototype = {
         game.load.image('background4','fightstage.gif');
         
         game.load.spritesheet('bob', 'movement.png', 30, 33);
-        game.load.spritesheet('enemy','Bil.png', 30,30)
+        game.load.spritesheet('enemy','fighter.png',110,127);
 
     },
     
@@ -34,11 +35,32 @@ demo.state0.prototype = {
         
         bob.scale.setTo(1.5,1.5);
         
-        bob.animations.add('walk',[0,1,2,3,4, 5]);
+        bob.animations.add('walk',[0,1,2,3,4,5]);
+        enemy.animations.add('walk', [0,1,2,3,4,5,6,7,8,9,10]);
     },
     
     
     update:function(){
+        if( game.input.keyboard.isDown(Phaser.Keyboard.D)){ 
+            enemy.animations.play('walk', 7, true);
+            enemy.scale.setTo(-1.5,1.5)
+            enemy.x = enemy.x + speed;  
+        }
+        if(game.input.keyboard.isDown(Phaser.Keyboard.A)){
+             enemy.animations.play('walk', 7, true);
+            enemy.scale.setTo(1.5,1.5);
+            enemy.x = enemy.x - speed;
+        }
+        if(game.input.keyboard.isDown(Phaser.Keyboard.S)){
+            enemy.animations.play('walk');
+            enemy.y = enemy.y + speed;
+        }
+        
+        if(game.input.keyboard.isDown(Phaser.Keyboard.W)){
+            enemy.animations.play('walk');
+            enemy.y = enemy.y - speed;
+        
+        }
         if( game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){ 
             bob.animations.play('walk');
             bob.scale.setTo(1.5,1.5)
