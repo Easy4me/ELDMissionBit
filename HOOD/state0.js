@@ -1,6 +1,8 @@
  var demo = {};
 var bob;
 var speed = 6;
+var enemy;
+var punch;
 
 demo.state0 = function(){};
 
@@ -12,8 +14,10 @@ demo.state0.prototype = {
         game.load.image('background3','background.jpg');
         game.load.image('background4','fightstage.gif');
         
-        game.load.spritesheet('bob', 'movement.png', 30, 33);
-        game.load.spritesheet('enemy','Bil.png', 30,30)
+        game.load.spritesheet('bob', 'movement_punch.png', 30.254, 29);
+        game.load.spritesheet('enemy','Bil.png', 55,55)
+        game.load.spritesheet('punch', 'punch.png', 36,30);
+        game.load.spritesheet('Fight', 'Fight.png', 36,30);
 
     },
     
@@ -22,20 +26,25 @@ demo.state0.prototype = {
         game.physics.startSystem(Phaser.Physics.ARCADE);
      
 //        add background to game
-        var bg = game.add.sprite(10,10,'background4');
+        var bg = game.add.sprite(0,0,'background4');
         bg.height = game.height;
         bg.width = game.width;
         
         bob = game.add.sprite(0,0,'bob');
-        enemy=game.add.sprite(0,0,'enemy');
+        enemy=game.add.sprite(10,10,'enemy');
         
         game.physics.enable(bob);
+        game.physics.enable(enemy);
         bob.body.collideWorldBounds = true;
         
         bob.scale.setTo(1.5,1.5);
         
         bob.animations.add('walk',[0,1,2,3,4, 5]);
-        bob.animations.add('punch',[0,1,2,3,4]);
+        bob.animations.add('punch',[6,7,8,9]);
+        
+        enemy.animations.add('walk', [0,1,2,3,4,5]);
+        enemy.animations.add('punches',[6,7,8,9]);
+        
     },
     
     
@@ -58,13 +67,23 @@ demo.state0.prototype = {
         if(game.input.keyboard.isDown(Phaser.Keyboard.UP)){
             bob.animations.play('walk');
             bob.y = bob.y - speed;
-        } if(game.input.keyboard.isDown(Phaser.keyboard.A))
+        } 
+         if(game.input.keyboard.isDown(Phaser.Keyboard.M)){
+            bob.animations.play('punch', 5, true)
+        }
+        
+        if(bob.x > 0)
+            {
+                enemy.x = bob.x - 50;
             }
-            bob.animations.play('punch');
-        }    bob.y = bob.y -speed;
+        
+        if( bob.y > 0)
+            {
+                enemy.y = bob.x - 50;
+            }
         
         
-
+    }
     
 };
         
